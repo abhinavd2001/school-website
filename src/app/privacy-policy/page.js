@@ -79,9 +79,9 @@ export default function Privacypolicy() {
         />
       </div>
       <Header />
-      <div className="absolute bottom-0 w-full h-25 md:h-40 flex items-center justify-center bg-slate-900">
-        <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight leading-tight text-center px-4">
-          Privacy{' '}<span className="text-[#e36c28]">Policy</span>
+      <div className="absolute bottom-0 w-full h-30 md:h-40 flex items-center justify-center bg-slate-900">
+        <h1 className="text-2xl md:text-5xl font-bold text-white tracking-wide leading-tight text-center px-4 py-2">
+          Privacy<span className="text-[#e36c28]"> Policy</span>
         </h1>
       </div>
 

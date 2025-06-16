@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { VscRemove } from "react-icons/vsc";
 
 const galleryData = [
   {
@@ -41,13 +40,13 @@ const galleryData = [
 const Gallery = () => {
   return (
     <div className="min-h-screen bg-white font-open-sans">
-      <div className="relative w-full h-32 md:h-40 flex items-center justify-center bg-slate-900">
-        <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight leading-tight text-center px-4 py-2">
+      <div className="relative w-full h-30 md:h-40 flex items-center justify-center bg-slate-900">
+        <h1 className="text-2xl md:text-5xl font-bold text-white tracking-wide leading-tight text-center px-4 py-2">
           The 4 C's of <span className="text-[#e36c28]">Himalyan Torchbearers</span>
         </h1>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 h-[calc(100vh-8rem)] md:h-[calc(100vh-10rem)]">
+      <div className="grid grid-cols-2 md:grid-cols-4 h-[calc(100vh-4rem)]">
         {galleryData.map((item) => (
           <div
             key={item.id}
@@ -59,13 +58,10 @@ const Gallery = () => {
               className="w-full h-full object-auto pt-28 md:pt-40"
             />
             <div className={`absolute inset-0 ${item.overlayColor} bg-opacity-90 text-white transition-all duration-500 ease-in-out h-28 md:h-40 group-hover:h-full overflow-hidden z-10`}>
-              <div className="pt-4 md:pt-8 px-3 md:px-6 relative">
-                <h3 className="text-sm md:text-lg font-bold ml-3 md:ml-6">{item.title}</h3>
-                <VscRemove
-                  color="white"
-                  size={40}
-                  className="absolute ml-3 md:ml-6"
-                />
+              <div className="pt-6 md:pt-10 px-3 md:px-6 relative">
+                <h3 className="text-xl md:text-2xl font-bold ml-3 md:ml-6">{item.title}</h3>
+                <div className="relative my-2 flex justify-center before:content-[''] before:absolute before:left-7 before:top-[11px] before:w-15 before:h-1 before:bg-white">
+                </div>
               </div>
               <div className="px-3 md:px-8 pt-24 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <p className="text-xs md:text-sm leading-relaxed">{item.description}</p>

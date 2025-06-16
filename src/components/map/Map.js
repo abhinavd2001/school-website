@@ -11,21 +11,21 @@ const Map = () => {
 
                 <div className="relative h-full w-full z-40 bg-slate-800/50 content-center justify-center font-open-sans overflow-hidden">
                     <div className="text-center">
-                        <span className="text-blue-300 text-xl font-medium tracking-wider uppercase">
+                        <span className="text-blue-300 text-lg font-medium tracking-wider uppercase">
                             A Truly
                         </span>
-                        <h1 className="text-4xl md:text-6xl font-bold text-white mt-2 mb-1">
+                        <h1 className="text-2xl md:text-4xl font-bold text-white mt-4 mb-2">
                             Exceptional
                         </h1>
-                        <h1 className="text-4xl md:text-6xl font-bold text-[#e36c28] mt-1">
+                        <h1 className="text-2xl md:text-4xl font-bold text-[#e36c28] mt-2">
                             Campus
                         </h1>
                         <VscRemove
                             color="white"
                             size={60}
-                            className='justify-self-center h-10 w-30 md:h-auto md-w-auto'
+                            className='justify-self-center h-5 w-15 md:h-auto md-w-auto'
                         />
-                        <p className="block text-gray-300 text-base md:text-lg leading-relaxed mt-1 md:mt-3 md-text-wrap px-6">
+                        <p className="block text-gray-300 text-sm md:text-base leading-relaxed mt-3 md:mt-5 md-text-wrap px-4 md:px-15">
                             Our picturesque school campus is conveniently
                             located 30 minutes from Dehradun and 40 minutes from Mussorie, with
                             easy access to City Center.

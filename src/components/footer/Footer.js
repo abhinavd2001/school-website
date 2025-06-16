@@ -13,7 +13,7 @@ const Footer = ({ prevSlide, nextSlide }) => {
       <h1 className="hidden sm:inline-block text-white mx-16 my-8 text-5xl uppercase font-medium text-shadow-lg text-shadow-black font-open-sans">
         First Futuristic CBSE School
       </h1>
-      <div className="flex mx-6 md:mx-16 mb-12 md:mb-15 justify-end md:justify-between">
+      <div className="flex mx-6 md:mx-16 mb-24 md:mb-15 justify-end md:justify-between">
 
         <div className="hidden sm:inline-flex flex items-center space-x-4 ">
 

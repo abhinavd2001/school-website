@@ -18,9 +18,9 @@ export default function Home() {
                 />
             </div>
             <Header />
-            <div className="absolute bottom-0 w-full h-25 md:h-40 flex items-center justify-center bg-slate-900">
-                <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight leading-tight text-center px-4">
-                    Why{' '}<span className="text-[#e36c28]">Himalyan</span>{' '}Torchbearers
+            <div className="absolute bottom-0 w-full h-30 md:h-40 flex items-center justify-center bg-slate-900">
+                <h1 className="text-2xl md:text-5xl font-bold text-white tracking-wide leading-tight text-center px-4 py-2">
+                    Why<span className="text-[#e36c28]"> us</span>
                 </h1>
             </div>
             <div className="grid md:grid-cols-2 gap-8 mx-5 md:mx-20 my-4 md:my-10">

@@ -18,14 +18,14 @@ const FinalFooter = () => {
     return (
         <footer className="bg-white mt-auto my-2 md:my-4 font-open-sans">
             <div className="container mx-auto px-2 flex flex-wrap h-fit">
-                <div className='flex flex-col md:flex-row w-full h-fit border-b-2 border-gray-300 my-2 md:my-4 mx-10 xl:mx-14 pb-4'>
+                <div className='flex flex-col md:flex-row w-full h-fit border-b-2 border-gray-300 my-4 md:my-14 mx-10 xl:mx-14 pb-16'>
                     <div className="flex-1">
-                        <h3 className="text-4xl font-medium mb-2 text-gray-800">Contact Us</h3>
-                        <div className="text-gray-600 text-xl md:text-lg mb-4 text-wrap pr-4">
+                        <h3 className="text-3xl font-bold mb-2 text-gray-800">Contact Us</h3>
+                        <div className="text-gray-600 text-lg md:text-md mb-6 text-wrap pr-4">
                             <p>Kuthalgate, Mussoorie Road, Rajpur-248009,</p>
                             <p>Dehradun Uttarakhand India</p>
                         </div>
-                        <div className="text-gray-600 text-xl md:text-lg">
+                        <div className="text-gray-600 text-lg md:text-md">
                             <p className="mb-2">
                                 <strong>Email Address</strong>:{' '}
                                 <a
@@ -47,8 +47,8 @@ const FinalFooter = () => {
                         </div>
                     </div>
 
-                    <div className="flex flex-col sm:flex-row gap-3 flex-1 justify-center md:justify-around mt-4 lg-mt-0 max-h-fit">
-                        <div className="flex flex-col space-y-2 text-xl md:text-lg h-fit">
+                    <div className="flex flex-col sm:flex-row gap-3 flex-1 justify-center md:justify-around mt-6 lg-mt-0 max-h-fit">
+                        <div className="flex flex-col space-y-2 text-lg md:text-md h-fit">
                             <Link
                                 href="/about"
                                 className="text-gray-600 hover:text-[#e36c28] transition-colors"
@@ -77,7 +77,7 @@ const FinalFooter = () => {
                                 Download Brochure
                             </a>
                         </div>
-                        <div className="flex flex-col space-y-2 text-xl md:text-md justify-self-center h-fit">
+                        <div className="flex flex-col space-y-2 text-lg md:text-md justify-self-center h-fit">
                             <Link
                                 href="/careers"
                                 className="text-gray-600 hover:text-[#e36c28] transition-colors"
@@ -100,7 +100,7 @@ const FinalFooter = () => {
                     </div>
                 </div>
 
-                <div className="w-full flex justify-center item-center my-2 md:my-4">
+                <div className="w-full flex justify-center item-center my-5 md:my-8">
                     <div className="flex text-3xl">
                         <Link
                             href="https://www.facebook.com"
@@ -128,8 +128,7 @@ const FinalFooter = () => {
                         </Link>
                     </div>
                 </div>
-
-                <div className="w-full grid grid-cols-2 grid-rows-2 md:grid-cols-3 md:grid-rows-1 grid-flow-col justify-center items-center text-gray-600 text:sm md:text-md">
+                <div className="w-full grid grid-cols-2 grid-rows-2 md:grid-cols-3 md:grid-rows-1 grid-flow-col justify-center items-center text-gray-600 text:xs md:text-sm">
                     <button onClick={handleClick} className="hover:text-[#e36c28] transition-colors md:justify-self-end">Privacy Policy</button>
                     <span className='text-center col-span-2 md:col-span-1'>
                         @Copyright {new Date().getFullYear()} Himalayan Torchbearers

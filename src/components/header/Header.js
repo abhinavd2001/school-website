@@ -371,12 +371,11 @@ const Header = () => {
                 <div className="relative flex justify-center before:content-[''] before:absolute before:left-0 before:top-[11px] before:w-full before:h-px before:bg-black">
                   <span className="flex text-black text-lg bg-white z-50 px-3">OR</span>
                 </div>
-                <button
-                  href="tel:09290097"
-                  className="w-full inline-flex items-center my-3 text-xl justify-between font-bold cursor-pointer text-center px-6 py-2 bg-white text-slate-950 border-1 border-slate-950 uppercase font-bold"
-                >
+                <button className="w-full">
+                  <a href="tel:8755735050" className="w-full inline-flex items-center my-3 text-xl justify-between font-bold cursor-pointer text-center px-6 py-2 bg-white text-slate-950 border-1 border-slate-950 uppercase font-bold">
                   <FaMobileScreenButton size={25} />
                   <span className="flex-1">+91 87557 35050</span>
+                  </a>
                 </button>
               </div>
             </DialogPanel>

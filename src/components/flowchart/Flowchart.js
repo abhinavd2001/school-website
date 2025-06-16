@@ -107,12 +107,12 @@ const Flowchart = () => {
 
   return (
     <div className="min-h-screen bg-white relative">
-      <div className="relative w-full h-32 md:h-40 flex items-center justify-center bg-slate-900">
-        <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight leading-tight text-center px-4">
-          The Himalyan <span className="text-orange-[#e36c28]">Learnings</span>
+      <div className="relative w-full h-30 md:h-40 flex items-center justify-center bg-slate-900">
+        <h1 className="text-2xl md:text-5xl font-bold text-white tracking-wide leading-tight text-center px-4 py-2">
+          The Himalyan <span className="text-[#e36c28]">Learnings</span>
         </h1>
       </div>
-      <div className="max-w-6xl mx-auto py-5 px-4">
+      <div className="max-w-7xl mx-auto py-20 px-4">
 
         {/* Timeline Progress Bar */}
         <div className="relative timeline-container">
@@ -134,18 +134,18 @@ const Flowchart = () => {
           </div>
 
           {learningLevels.map((level, index) => (
-            <div key={level.id} className="relative mb-12 last:mb-0">
+            <div key={level.id} className="relative mb-12 last:mb-0 ">
               {/* Timeline Node - positioned at vertical center of card */}
-              <div className="absolute left-8 md:left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30">
+              <div className="absolute left-8.5 md:left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30">
                 <div
-                  className={`w-6 h-6 rounded-full border-4 border-white transition-all duration-500 shadow-lg ${index === activeSlide ? 'bg-slate-900 scale-110' : 'bg-gray-400'
+                  className={`size-6 rounded-full border-4 border-white transition-all duration-500 shadow-lg ${index === activeSlide ? 'bg-slate-900 scale-110' : 'bg-gray-400'
                     }`}
                 />
               </div>
 
               {/* Content Card */}
               <div className={`flex ml-20 md:ml-0 ${index % 2 === 0 ? 'md:justify-end' : 'md:justify-start'}`}>
-                <div className={`w-full max-w-lg ${index % 2 === 0 ? 'md:mr-3' : 'md:ml-3'}`}>
+                <div className={`w-full max-w-lg ${index % 2 === 0 ? 'md:mr-5' : 'md:ml-5'}`}>
                   <div
                     className={`timeline-card bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer transform hover:-translate-y-2 ${index === activeSlide
                       ? 'opacity-100 translate-y-0 scale-105'
