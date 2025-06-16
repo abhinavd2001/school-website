@@ -104,7 +104,7 @@ export default function CareersPage() {
               <label className="block mb-1 text-lg">Position Applied For</label>
               <input type="text" className="w-full border px-4 py-2 mb-3 focus:outline-none focus:border-orange-500" />
               <label className="block mb-1 text-lg">Upload Resume (PDF/DOC)</label>
-              <input type="file" accept=".pdf,.doc,.docx" className="w-full border focus:outline-none focus:border-orange-500" />
+              <input type="file" className="block w-full border text-sm focus:z-10 focus:border-orange-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 file:bg-gray-50 file:border-r-1 file:me-4 file:py-3 file:px-4 dark:file:bg-neutral-700 dark:file:text-neutral-400" />
               <div className="text-center">
                 <button
                   type="submit"
