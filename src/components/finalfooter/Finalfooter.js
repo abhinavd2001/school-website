@@ -80,8 +80,6 @@ const FinalFooter = () => {
                         <div className="flex flex-col space-y-2 text-xl md:text-md justify-self-center h-fit">
                             <Link
                                 href="/careers"
-                                target="_blank"
-                                rel="noopener noreferrer"
                                 className="text-gray-600 hover:text-[#e36c28] transition-colors"
                             >
                                 Careers

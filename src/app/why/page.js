@@ -95,7 +95,7 @@ export default function Home() {
                 </p>
                 <div className="inline-flex items-center space-x-2 bg-white/20 backdrop-blur-sm rounded-lg px-2 md:px-6 py-3 text-[#e36c28]">
                     <Mail className="w-5 h-5" />
-                    <span className="font-light md:font-medium">admissions@himalayantorchbearers.edu.in</span>
+                    <span className="font-light md:font-medium">hello@htbacademy.org</span>
                 </div>
             </div>
             <FinalFooter />

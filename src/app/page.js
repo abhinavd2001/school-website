@@ -27,7 +27,7 @@ export default function Home() {
   };
   
   return (
-    <div className="w-full min-w-full overflow-x-hidden scroll-smooth">
+    <div className="w-full min-w-full overflow-x-hidden scroll-smooth mb-18 md:mb-0">
       <div className="min-h-screen relative">
         <div className="absolute inset-0 w-full z-0">
           <ImageSlider

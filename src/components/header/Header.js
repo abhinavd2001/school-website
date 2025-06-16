@@ -39,7 +39,7 @@ const Header = () => {
       <nav className={`flex flex-row px-4 pt-8 md:pt-8 md:px-10 justify-between items-center lg:space-x-4 text-white font-open-sans 
          bg-linear-to-b from-slate-900 to-transparent transition-opacity transition-discrete duration-700 ease-in-out ${showFirst ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}>
-        <Link href="#" className="hidden md:block">
+        <Link href="/" className="hidden md:block">
           <Image
             src="/logo.png"
             alt="School Logo"
@@ -48,7 +48,7 @@ const Header = () => {
             priority
           />
         </Link>
-        <Link href="#" className="block md:hidden">
+        <Link href="/" className="block md:hidden">
           <Image
             src="/logo.png"
             alt="School Logo"
@@ -134,8 +134,6 @@ const Header = () => {
                             </Link>
                             <Link
                               href="/careers"
-                              target="_blank"
-                              rel="noopener noreferrer"
                               className="text-white hover:text-blue-600 transition-colors"
                             >
                               Careers
@@ -161,11 +159,11 @@ const Header = () => {
                             Admissions {new Date().getFullYear()}-{new Date().getFullYear() + 1}
                           </button>
                           <Link
-                            href="tel:09290097"
+                            href="tel:8755735050"
                             className="inline-flex items-center text-lg my-2 font-bold justify-center no-underline px-4 py-3 bg-[#e36c28] text-white uppercase tracking-wider font-medium"
                           >
                             <FaMobileScreenButton className='mr-1' />
-                            +91 XXXXX XXXXX
+                            +91 87557 35050
                           </Link>
                           <div className="relative my-4 flex justify-center before:content-[''] before:absolute before:left-0 before:top-[11px] before:w-full before:h-px before:bg-white">
                           </div>
@@ -212,7 +210,7 @@ const Header = () => {
       <nav className={`grid grid-cols-4 absolute top-0 w-screen px-3 md:px-4 py-2 items-center justify-between text-white 
           font-normal font-open-sans uppercase bg-slate-900 transition-opacity transition-discrete duration-700 ease-in-out ${showSecond ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}>
-        <Link href="#" className="block xl:hidden col-span-2 md:col-span-1">
+        <Link href="/" className="block xl:hidden col-span-2 md:col-span-1">
           <Image
             src="/logo.png"
             alt="School Logo"
@@ -221,7 +219,7 @@ const Header = () => {
             priority
           />
         </Link>
-        <Link href="#" className="text-center hidden xl:block text-xl font-semibold tracking-wider leading-10">
+        <Link href="/" className="text-center hidden xl:block text-xl font-semibold tracking-wider leading-10">
           Himalyan Torchbearers
         </Link>
         <div className="col-span-2 md:col-span-3 flex flex-basis-100% font-medium tracking-wider justify-end-safe">
@@ -378,7 +376,7 @@ const Header = () => {
                   className="w-full inline-flex items-center my-3 text-xl justify-between font-bold cursor-pointer text-center px-6 py-2 bg-white text-slate-950 border-1 border-slate-950 uppercase font-bold"
                 >
                   <FaMobileScreenButton size={25} />
-                  <span className="flex-1">+91 XXXXX XXXXX</span>
+                  <span className="flex-1">+91 87557 35050</span>
                 </button>
               </div>
             </DialogPanel>

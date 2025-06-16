@@ -18,15 +18,15 @@ const Footer = ({ prevSlide, nextSlide }) => {
         <div className="hidden sm:inline-flex flex items-center space-x-4 ">
 
           <Link
-            href="tel:09290097"
+            href="tel:8755735050"
             className="inline-flex items-center text-lg font-bold justify-center text-center no-underline px-4 py-3 bg-[#e36c28] text-white uppercase tracking-wider font-medium"
           >            
             <FaMobileScreenButton className='mr-1'/>
-            Call Now +91 XXXXX XXXXX
+            Call Now +91 87557 35050
           </Link>
 
           <Link
-            href="https://www.facebook.com/EuroIntSchool"
+            href="https://www.facebook.com"
             target="_blank"
             rel="noopener noreferrer"
             className="size-12 ml-8 text-3xl bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center transition-colors duration-300"
@@ -35,7 +35,7 @@ const Footer = ({ prevSlide, nextSlide }) => {
           </Link>
 
           <Link
-            href="https://www.instagram.com/eurointschool/"
+            href="https://www.instagram.com"
             target="_blank"
             rel="noopener noreferrer"
             className="size-12 text-3xl bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-full flex items-center justify-center transition-all duration-300"
@@ -44,7 +44,7 @@ const Footer = ({ prevSlide, nextSlide }) => {
           </Link>
 
           <Link
-            href="https://api.whatsapp.com/send?phone=917009270097"
+            href="https://api.whatsapp.com"
             target="_blank"
             rel="noopener noreferrer"
             className="size-12 text-3xl bg-green-500 hover:bg-green-600 text-white rounded-full flex items-center justify-center transition-colors duration-300"
