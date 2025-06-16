@@ -1,0 +1,14 @@
+#dot {
+  animation: beep 2s infinite;
+  transition: ease-in-out;
+}
+
+@keyframes beep {
+  0%,100%  {
+    transform: scale(1.6);
+  }
+  50% {
+    transform: scale(6);
+  }
+}
+

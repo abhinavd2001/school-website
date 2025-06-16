@@ -1,0 +1,13 @@
+#imageSlider {
+  animation: fadeZoom 8s forwards;
+  transition: ease-in-out;
+}
+
+@keyframes fadeZoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.1);
+  }
+}
