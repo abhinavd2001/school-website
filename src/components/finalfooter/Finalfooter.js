@@ -18,7 +18,7 @@ const FinalFooter = () => {
     return (
         <footer className="bg-white mt-auto my-2 md:my-4 font-open-sans">
             <div className="container mx-auto px-2 flex flex-wrap h-fit">
-                <div className='flex flex-col md:flex-row w-full h-fit border-b-2 border-gray-300 my-4 md:my-14 mx-10 xl:mx-14 pb-16'>
+                <div className='flex flex-col md:flex-row w-full h-fit border-b-2 border-gray-300 my-8 md:my-14 mx-10 xl:mx-14 pb-10 md:pb-16'>
                     <div className="flex-1">
                         <h3 className="text-3xl font-bold mb-2 text-gray-800">Contact Us</h3>
                         <div className="text-gray-600 text-lg md:text-md mb-6 text-wrap pr-4">
@@ -100,7 +100,7 @@ const FinalFooter = () => {
                     </div>
                 </div>
 
-                <div className="w-full flex justify-center item-center my-5 md:my-8">
+                <div className="w-full flex justify-center item-center mb-8 md:mb-10">
                     <div className="flex text-3xl">
                         <Link
                             href="https://www.facebook.com"

@@ -1,0 +1,78 @@
+# Deny access to environment files
+<Files ".env*">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Deny access to sensitive files
+<Files "*.log">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Deny access to configuration files
+<Files "*.config.js">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files "package.json">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files "package-lock.json">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files "yarn.lock">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Deny access to source maps
+<Files "*.map">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Deny access to uploads directory (optional - if you want to prevent direct access)
+# <Directory "uploads">
+#     Order allow,deny
+#     Deny from all
+# </Directory>
+
+# Security headers
+<IfModule mod_headers.c>
+    # Prevent clickjacking
+    Header always append X-Frame-Options SAMEORIGIN
+    
+    # Prevent MIME type sniffing
+    Header always set X-Content-Type-Options nosniff
+    
+    # Enable XSS protection
+    Header always set X-XSS-Protection "1; mode=block"
+    
+    # Remove server signature
+    Header unset Server
+    Header unset X-Powered-By
+</IfModule>
+
+# Hide server information
+ServerTokens Prod
+ServerSignature Off
+
+# Disable directory browsing
+Options -Indexes
+
+# Prevent access to hidden files and directories
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Custom error pages (optional)
+# ErrorDocument 403 /403.html
+# ErrorDocument 404 /404.html
+# ErrorDocument 500 /500.html

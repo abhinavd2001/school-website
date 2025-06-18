@@ -108,7 +108,7 @@ const Flowchart = () => {
   return (
     <div className="min-h-screen bg-white relative">
       <div className="relative w-full h-30 md:h-40 flex items-center justify-center bg-slate-900">
-        <h1 className="text-2xl md:text-5xl font-bold text-white tracking-wide leading-tight text-center px-4 py-2">
+        <h1 className="text-3xl md:text-5xl font-bold text-white tracking-wide leading-tight text-center px-4 py-2">
           The Himalyan <span className="text-[#e36c28]">Learnings</span>
         </h1>
       </div>

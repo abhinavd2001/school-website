@@ -41,7 +41,7 @@ const Gallery = () => {
   return (
     <div className="min-h-screen bg-white font-open-sans">
       <div className="relative w-full h-30 md:h-40 flex items-center justify-center bg-slate-900">
-        <h1 className="text-2xl md:text-5xl font-bold text-white tracking-wide leading-tight text-center px-4 py-2">
+        <h1 className="text-3xl md:text-5xl font-bold text-white tracking-wide leading-tight text-center px-4 py-2">
           The 4 C's of <span className="text-[#e36c28]">Himalyan Torchbearers</span>
         </h1>
       </div>

@@ -20,12 +20,12 @@ export default function TransportPolicy() {
       </div>
       <Header />
       <div className="absolute bottom-0 w-full h-30 md:h-40 flex items-center justify-center bg-slate-900">
-        <h1 className="text-2xl md:text-5xl font-bold text-white tracking-wide leading-tight text-center px-4 py-2">
+        <h1 className="text-3xl md:text-5xl font-bold text-white tracking-wide leading-tight text-center px-4 py-2">
           Transport<span className="text-[#e36c28]"> Policy</span>
         </h1>
       </div>
       <div>
-        <main className="w-full mx-auto px-4 sm:px-6 lg:px-8 pt-5">
+        <main className="w-full mx-auto px-4 sm:px-6 lg:px-8 my-8 md:my-15">
           <div className="grid md:grid-cols-3 gap-8 m-4">
             <div className="bg-white rounded-xl shadow-lg p-8 border-t-4 border-slate-900">
               <h3 className="text-2xl font-bold text-slate-900 mb-4">Our Vision</h3>
@@ -53,7 +53,7 @@ export default function TransportPolicy() {
             </div>
           </div>
 
-          <section className="m-4">
+          <section className="mx-4 my-7 md:my-15">
             <div className="bg-gradient-to-r from-yellow-50 to-orange-50 border-l-4 border-yellow-400 rounded-lg p-8 my-10">
               <div className="flex items-start space-x-4">
                 <AlertCircle className="w-8 h-8 text-yellow-600 flex-shrink-0 mt-1" />
@@ -75,7 +75,7 @@ export default function TransportPolicy() {
         <section className="bg-slate-900 my-5 py-16 width-full">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center text-white">
-              <Bus className="w-20 h-20 mx-auto mb-6 text-white" />
+              <Bus className="w-20 h-20 mx-auto mb-6 text-[#e36c28]" />
               <h2 className="text-4xl font-bold mb-4">Safe & Reliable Transport</h2>
               <p className="text-xl text-white max-w-3xl mx-auto">
                 Ensuring the safest journey for our students with modern fleet, experienced drivers,

@@ -17,6 +17,74 @@ const Header = () => {
   const [scrollY, setScrollY] = useState(0);
   const [openMod, setOpenMod] = useState(false)
   const [openMod2, setOpenMod2] = useState(false)
+  const [formData, setFormData] = useState({
+    name: '',
+    class: '',
+    phone: '',
+    message: ''
+  });
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState('');
+  const [submitted2, setSubmitted2] = useState('');
+  const [error, setError] = useState('');
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setSubmitted('');
+    setSubmitted2('');
+    setError('');
+
+    const form = e.target;
+    const formType = form.getAttribute('id');
+
+    const submitData = new FormData();
+    submitData.append('formType', formType);
+
+    if (formType === 'admission') {
+      submitData.append('name', formData.name);
+      submitData.append('class', formData.class);
+      submitData.append('phone', formData.phone);
+      submitData.append('message', formData.message);
+    } else if (formType === 'callback') {
+      submitData.append('name', formData.name);
+      submitData.append('class', formData.class);
+      submitData.append('phone', formData.phone);
+    }
+
+    try {
+      const response = await fetch('/api/forms', {
+        method: 'POST',
+        body: submitData,
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setFormData({ name: '', class: '', phone: '', message: '' });
+        if(formType === 'admission'){
+          setSubmitted(true);
+        }
+        else if(formType === 'callback'){
+          setSubmitted2(true);
+        }
+      } else {
+        setError(result.error || 'Failed to submit.');
+      }
+    } catch (error) {
+      setError('An error occurred while submitting.');
+      console.error('Error:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,8 +98,6 @@ const Header = () => {
 
   const showFirst = scrollY === 0;
   const showSecond = scrollY > 0;
-
-
 
 
   return (
@@ -58,10 +124,10 @@ const Header = () => {
           />
         </Link>
         <div className="flex flex-row items-center">
-          <button onClick={() => setOpenMod2(true)} className="flex cursor-pointer uppercase text-shadow-xs text-shadow-black text-lg font-normal tracking-normal content-center hidden lg:flex px-4">
+          <button onClick={() => setOpenMod2(true)} className="cursor-pointer uppercase text-shadow-xs text-shadow-black text-lg font-normal tracking-normal content-center hidden lg:flex px-4">
             Request A Callback
           </button>
-          <Link href="/admissions" className="flex content-center uppercase text-shadow-xs text-shadow-black text-lg font-normal tracking-normal hidden lg:flex px-4">
+          <Link href="/admissions" className="content-center uppercase text-shadow-xs text-shadow-black text-lg font-normal tracking-normal hidden lg:flex px-4">
             Admissions {new Date().getFullYear()}-{new Date().getFullYear() + 1}
           </Link>
           <button onClick={() => setOpen(true)} className='flex flex-col md:flex-row uppercase text-shadow-xs text-shadow-black text-lg font-normal tracking-normal items-center px-0 md:px-4'>
@@ -154,13 +220,13 @@ const Header = () => {
 
                           <button
                             onClick={() => setOpenMod1(true)}
-                            className="inline-flex items-center uppercase cursor-pointer mt-12 mb-2 text-lg font-bold justify-center text-center no-underline px-4 py-3 bg-[#e36c28] text-white uppercase tracking-wider font-medium"
+                            className="inline-flex items-center uppercase cursor-pointer mt-12 mb-2 text-lg justify-center text-center no-underline px-4 py-3 bg-[#e36c28] text-white tracking-wider font-medium"
                           >
                             Admissions {new Date().getFullYear()}-{new Date().getFullYear() + 1}
                           </button>
                           <Link
                             href="tel:8755735050"
-                            className="inline-flex items-center text-lg my-2 font-bold justify-center no-underline px-4 py-3 bg-[#e36c28] text-white uppercase tracking-wider font-medium"
+                            className="inline-flex items-center text-lg my-2 justify-center no-underline px-4 py-3 bg-[#e36c28] text-white uppercase tracking-wider font-medium"
                           >
                             <FaMobileScreenButton className='mr-1' />
                             +91 87557 35050
@@ -223,7 +289,7 @@ const Header = () => {
           Himalyan Torchbearers
         </Link>
         <div className="col-span-2 md:col-span-3 flex flex-basis-100% font-medium tracking-wider justify-end-safe">
-          <Link href="/about" className="hidden xl:block content-center w-fit px-4 text-lg">
+          <Link href="/new" className="hidden xl:block content-center w-fit px-4 text-lg">
             About Us
           </Link>
           <Link href="/careers" className="hidden xl:block content-center w-fit px-4 text-lg">
@@ -272,37 +338,36 @@ const Header = () => {
                 <div className="relative w-0 left-0 right-0 mx-auto z-50 before:content-[''] before:absolute before:top-[calc(100%-10px)] before:border-b-[12px] before:border-b-white before:border-l-[12px] before:border-l-transparent before:border-r-[12px] before:border-r-transparent"></div>
               </div>
               <div className="bg-white px-5 py-4">
-                <form id="enquiryform">
-                  <div className="row h-full">
-                    <Input type="text" required="" className="w-full border-1 border-gray-300 py-3 px-4 text-lg text-black placeholder:text-black outline-none  mb-2" defaultValue="" id="child_name1" name="child_name" placeholder="Student Name*"></Input>
-                    <select className="w-full border-1 border-gray-300 py-3 px-4 text-lg text-black placeholder:text-black outline-none  mb-2" id="admclass1" name="admclass" aria-label="Default select example" required="">
-                      <option defaultValue="">Select Class*</option>
-                      <option defaultValue="PG">PG</option>
-                      <option defaultValue="Nursery">Nursery</option>
-                      <option defaultValue="LKG">LKG</option>
-                      <option defaultValue="UKG">UKG</option>
-                      <option defaultValue="1">1</option>
-                      <option defaultValue="2">2</option>
-                      <option defaultValue="3">3</option>
-                      <option defaultValue="4">4</option>
-                      <option defaultValue="5">5</option>
-                      <option defaultValue="6">6</option>
-                      <option defaultValue="7">7</option>
-                      <option defaultValue="8">8</option>
-                      <option defaultValue="9">9</option>
-                      <option defaultValue="10">10</option>
-                      <option defaultValue="11th Commerce">11th Commerce</option>
-                      <option defaultValue="11th Science">11th Science</option>
-                      <option defaultValue="11th Humanities">11th Humanities</option>
-                      <option defaultValue="12th Commerce">12th Commerce</option>
-                      <option defaultValue="12th Science">12th Science</option>
-                      <option defaultValue="12th Humanities">12th Humanities</option>
+                <form onSubmit={handleSubmit} id='admission'>
+                  {error && <p className="text-red-500">{error}</p>}
+                  <div className={`row h-full transition-visibility duration-500 ${submitted ? 'hidden' : 'block'}`}>
+                    <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required className="w-full border-1 border-gray-300 py-3 px-4 text-lg text-black placeholder:text-black outline-none  mb-2" placeholder="Student Name*"></input>
+                    <select type="text" id="class" name="class" value={formData.class} onChange={handleChange} required className="w-full border-1 border-gray-300 py-3 px-4 text-lg text-black placeholder:text-black outline-none  mb-2">
+                      <option value="">Select Class*</option>
+                      {[
+                        'PG', 'Nursery', 'LKG', 'UKG',
+                        '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+                        '11th Commerce', '11th Science', '11th Humanities',
+                        '12th Commerce', '12th Science', '12th Humanities',
+                      ].map((cls) => (
+                        <option key={cls} value={cls}>{cls}</option>
+                      ))}
                     </select>
-                    <Input type="text" className="w-full border-1 border-gray-300 py-3 px-4 text-lg text-black placeholder:text-black outline-none mb-2" defaultValue="" id="mobile1" name="mobile" placeholder="Mobile No.*" required=""></Input>
-                    <textarea required="" className="w-full h-18 min-h-11 border-1 border-gray-300 py-3 px-4 text-lg text-black placeholder:text-black outline-none mb-2" name="message" id="message1" rows="3" placeholder="Write Message"></textarea>
-                    <button type="submit" className="bg-[#e36c28] w-full cursor-pointer text-white py-3 px-4 text-xl text-black placeholder:text-black outline-none">Submit</button>
+                    <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} required className="w-full border-1 border-gray-300 py-3 px-4 text-lg text-black placeholder:text-black outline-none mb-2" placeholder="Mobile No.*"></input>
+                    <textarea id="message" name="message" value={formData.message} onChange={handleChange} required className="w-full h-18 min-h-11 border-1 border-gray-300 py-3 px-4 text-lg text-black placeholder:text-black outline-none mb-2" rows="3" placeholder="Write Message"></textarea>
+                    <button type="submit" disabled={loading} className="bg-[#e36c28] w-full cursor-pointer text-white py-3 px-4 text-xl placeholder:text-black outline-none">{loading ? 'Sending...' : 'Submit Inquiry'}</button>
                   </div>
                 </form>
+                <div
+                  className={`transition-visibility duration-500 text-slate-900 bg-white 
+                       ${submitted ? 'flex' : 'hidden'} 
+                       justify-center items-center w-full h-full`} >
+                  <div className="w-full h-fit bg-white py-10 ">
+                    <h2 className="text-xl my-2 font-semibold text-center">Form submitted successfully!</h2>
+                    <p className="text-center my-2" >Thanks for your Response</p>
+                    <p className="text-center my-2" >We’ll get back to you soon.</p>
+                  </div>
+                </div>
               </div>
             </DialogPanel>
           </div>
@@ -337,52 +402,48 @@ const Header = () => {
                 </div>
                 <div className="relative w-0 left-0 right-0 mx-auto z-50 before:content-[''] before:absolute before:top-[calc(100%-10px)] before:border-b-[12px] before:border-b-white before:border-l-[12px] before:border-l-transparent before:border-r-[12px] before:border-r-transparent"></div>
               </div>
-              <div className="bg-white px-5 py-4">
-                <form id="enquiryform">
+              <div className={`bg-white px-5 py-4 transition-visibility duration-500 ${submitted2 ? 'hidden' : 'block'}`}>
+                <form onSubmit={handleSubmit} id='callback'>
+                  {error && <p className="text-red-500">{error}</p>}
                   <div className="row h-full">
-                    <Input type="text" required="" className="w-full border-1 border-gray-300 py-3 px-4 text-lg text-black placeholder:text-black outline-none  mb-2" defaultValue="" id="child_name1" name="child_name" placeholder="Student Name*"></Input>
-                    <select className="w-full border-1 border-gray-300 py-3 px-4 text-lg text-black placeholder:text-black outline-none  mb-2" id="admclass1" name="admclass" aria-label="Default select example" required="">
-                      <option defaultValue="">Select Class*</option>
-                      <option defaultValue="PG">PG</option>
-                      <option defaultValue="Nursery">Nursery</option>
-                      <option defaultValue="LKG">LKG</option>
-                      <option defaultValue="UKG">UKG</option>
-                      <option defaultValue="1">1</option>
-                      <option defaultValue="2">2</option>
-                      <option defaultValue="3">3</option>
-                      <option defaultValue="4">4</option>
-                      <option defaultValue="5">5</option>
-                      <option defaultValue="6">6</option>
-                      <option defaultValue="7">7</option>
-                      <option defaultValue="8">8</option>
-                      <option defaultValue="9">9</option>
-                      <option defaultValue="10">10</option>
-                      <option defaultValue="11th Commerce">11th Commerce</option>
-                      <option defaultValue="11th Science">11th Science</option>
-                      <option defaultValue="11th Humanities">11th Humanities</option>
-                      <option defaultValue="12th Commerce">12th Commerce</option>
-                      <option defaultValue="12th Science">12th Science</option>
-                      <option defaultValue="12th Humanities">12th Humanities</option>
+                    <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required className="w-full border-1 border-gray-300 py-3 px-4 text-lg text-black placeholder:text-black outline-none  mb-2" placeholder="Student Name*"></input>
+                    <select type="text" id="class" name="class" value={formData.class} onChange={handleChange} required className="w-full border-1 border-gray-300 py-3 px-4 text-lg text-black placeholder:text-black outline-none  mb-2">
+                      <option value="">Select Class*</option>
+                      {[
+                        'PG', 'Nursery', 'LKG', 'UKG',
+                        '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+                        '11th Commerce', '11th Science', '11th Humanities',
+                        '12th Commerce', '12th Science', '12th Humanities',
+                      ].map((cls) => (
+                        <option key={cls} value={cls}>{cls}</option>
+                      ))}
                     </select>
-                    <Input type="text" className="w-full border-1 border-gray-300 py-3 px-4 text-lg text-black placeholder:text-black outline-none  mb-2" defaultValue="" id="mobile1" name="mobile" placeholder="Mobile No.*" required=""></Input>
-                    <button type="submit" className="bg-[#e36c28] my-3 w-full cursor-pointer text-white py-3 px-4 text-xl text-black placeholder:text-black outline-none">Submit</button>
+                    <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} required className="w-full border-1 border-gray-300 py-3 px-4 text-lg text-black placeholder:text-black outline-none  mb-2" placeholder="Mobile No.*"></input>
+                    <button type="submit" disabled={loading} className="bg-[#e36c28] my-3 w-full cursor-pointer text-white py-3 px-4 text-xl placeholder:text-black outline-none">{loading ? 'Sending...' : 'Submit Inquiry'}</button>
                   </div>
                 </form>
                 <div className="relative flex justify-center before:content-[''] before:absolute before:left-0 before:top-[11px] before:w-full before:h-px before:bg-black">
                   <span className="flex text-black text-lg bg-white z-50 px-3">OR</span>
                 </div>
                 <button className="w-full">
-                  <a href="tel:8755735050" className="w-full inline-flex items-center my-3 text-xl justify-between font-bold cursor-pointer text-center px-6 py-2 bg-white text-slate-950 border-1 border-slate-950 uppercase font-bold">
-                  <FaMobileScreenButton size={25} />
-                  <span className="flex-1">+91 87557 35050</span>
+                  <a href="tel:8755735050" className="w-full inline-flex items-center my-3 text-xl justify-between cursor-pointer text-center px-6 py-2 bg-white text-slate-950 border-1 border-slate-950 uppercase font-bold">
+                    <FaMobileScreenButton size={25} />
+                    <span className="flex-1">+91 87557 35050</span>
                   </a>
                 </button>
+              </div>
+              <div className={`px-5 py-4 transition-visibility duration-500 text-slate-900 bg-white ${submitted2 ? 'flex' : 'hidden'} justify-center items-center w-full h-full`}>
+                <div className="w-full h-fit bg-white py-10 ">
+                  <h2 className="text-xl my-2 font-semibold text-center">Form submitted successfully!</h2>
+                  <p className="text-center my-2" >Thanks for your Response</p>
+                  <p className="text-center my-2" >We’ll get back to you soon.</p>
+                </div>
               </div>
             </DialogPanel>
           </div>
         </div>
       </Dialog>
-      <footer className="block md:hidden grid grid-cols-2 fixed bottom-0 z-50 w-screen items-center text-white text-md
+      <footer className="md:hidden grid grid-cols-2 fixed bottom-0 z-50 w-screen items-center text-white text-md
           font-semibold font-open-sans uppercase bg-slate-800">
         <Link href="/admissions" className="text-center block md:hidden bg-[#e36c28] px-6 py-3 text-wrap">
           Admissions <br />{new Date().getFullYear()}-{new Date().getFullYear() + 1}
