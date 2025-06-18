@@ -4,7 +4,7 @@ import { React, useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { CgMenuRightAlt } from "react-icons/cg";
-import { Dialog, DialogBackdrop, DialogPanel, DialogTitle, Input, TransitionChild } from '@headlessui/react'
+import { Dialog, DialogBackdrop, DialogPanel, DialogTitle, TransitionChild } from '@headlessui/react'
 import { IoClose } from "react-icons/io5";
 import { FaMobileScreenButton } from "react-icons/fa6";
 import { FaFacebookF } from "react-icons/fa6";

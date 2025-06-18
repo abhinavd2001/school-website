@@ -4,11 +4,9 @@ import FinalFooter from "@/components/finalfooter/Finalfooter";
 import Header from "@/components/header/Header";
 import Image from 'next/image';
 import { useState } from "react";
-import HCaptcha from "@hcaptcha/react-hcaptcha";
-import { useRef } from "react";
 
 export default function Admissions() {
-  const [formData, setFormData] = useState({
+const [formData, setFormData] = useState({
     name: '',
     class: '',
     phone: '',
@@ -17,8 +15,6 @@ export default function Admissions() {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState('');
   const [error, setError] = useState('');
-  const captchaRef = useRef(null);
-  const [token, setToken] = useState('');
 
   const handleChange = (e) => {
     setFormData({
@@ -27,47 +23,37 @@ export default function Admissions() {
     });
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  setError('');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
 
-  try {
-    // Trigger invisible captcha
-    const captchaToken = await captchaRef.current.execute();
-    if (!captchaToken) {
-      setError('Captcha verification failed');
+    try {
+      const submitData = new FormData();
+      submitData.append('formType', 'admission')
+      submitData.append('name', formData.name);
+      submitData.append('class', formData.class);
+      submitData.append('phone', formData.phone);
+      submitData.append('message', formData.message);
+
+      const response = await fetch('/api/forms', {
+        method: 'POST',
+        body: submitData,
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setFormData({ name: '', class: '', phone: '', message: '' });
+        setSubmitted(true);
+      } else {
+        setError(result.error || 'Failed to submit.');
+      }
+    } catch (error) {
+      setError('An error occurred while submitting.');
+    } finally {
       setLoading(false);
-      return;
-    }
-
-    const formDataToSend = new FormData();
-    formDataToSend.append('formType', 'admission');
-    formDataToSend.append('name', formData.name);
-    formDataToSend.append('class', formData.class);
-    formDataToSend.append('phone', formData.phone);
-    formDataToSend.append('message', formData.message);
-    formDataToSend.append('token', captchaToken); // ✅ REQUIRED
-
-    const res = await fetch('/api/forms', {
-      method: 'POST',
-      body: formDataToSend,
-    });
-
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || result.message);
-
-    // Success
-    alert('Form submitted successfully!');
-    setFormData({ name: '', class: '', phone: '', message: '' });
-  } catch (err) {
-    setError(err.message || 'An error occurred');
-  } finally {
-    setLoading(false);
-    captchaRef.current.resetCaptcha(); // Reset for another try
-  }
-};
-
+    } 
+  };
 
   return (
     <div className="w-full min-w-full overflow-x-hidden scroll-smooth mb-18 md:mb-0">
@@ -134,7 +120,7 @@ const handleSubmit = async (e) => {
             <form onSubmit={handleSubmit} >
               {error && <p className="text-red-500">{error}</p>}
               <label className="block mb-2 font-lg">Student's Name</label>
-              <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required className="w-full border px-4 py-2 mb-4 focus:outline-none focus:border-orange-500" />
+              <input  type="text" id="name" name="name" value={formData.name} onChange={handleChange} required className="w-full border px-4 py-2 mb-4 focus:outline-none focus:border-orange-500" />
               <label className="block mb-2 font-lg">Class Applying For</label>
               <select type="text" id="class" name="class" value={formData.class} onChange={handleChange} required className="w-full border px-4 py-2 mb-4 focus:outline-none focus:border-orange-500">
                 <option value="">Select Class*</option>
@@ -152,14 +138,6 @@ const handleSubmit = async (e) => {
               <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} required className="w-full border px-4 py-2 mb-4 focus:outline-none focus:border-orange-500" />
               <label className="block mb-2 font-lg">Message</label>
               <textarea id="message" name="message" value={formData.message} onChange={handleChange} required className="w-full border px-4 py-2 mb-4 h-24 min-h-11 focus:outline-none focus:border-orange-500" ></textarea>
-              <HCaptcha
-                ref={captchaRef}
-                sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY}
-                size="invisible"
-                onVerify={(token) => setToken(token)}
-                onError={() => setError("Captcha error")}
-                onExpire={() => setError("Captcha expired, please try again")}
-              />
               <div className="text-center mt-2">
                 <button
                   type="submit"
@@ -172,7 +150,10 @@ const handleSubmit = async (e) => {
             </form>
           </div>
           <div
-            className={`transition-visibility duration-500 text-slate-900 bg-white ${submitted ? 'flex' : 'hidden'} justify-center items-center w-full h-full`} >
+            className={`transition-visibility duration-500 text-slate-900 bg-white 
+                       ${submitted ? 'flex' : 'hidden'} 
+                       justify-center items-center w-full h-full`}
+          >
             <div className="w-full h-fit bg-white py-10 ">
               <h2 className="text-xl my-2 font-semibold text-center">Form submitted successfully!</h2>
               <p className="text-center my-2" >Thanks for your Response</p>
