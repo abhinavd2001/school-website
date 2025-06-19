@@ -14,7 +14,7 @@ export default function Admissions() {
     message: ''
   });
   const [loading, setLoading] = useState(false);
-  const [submitted, setSubmitted] = useState('');
+  const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
   const [captchaToken, setCaptchaToken] = useState('');
   const captchaRef = useRef();
@@ -31,9 +31,17 @@ export default function Admissions() {
     setLoading(true);
 
     if (!captchaToken) {
-      alert('Please verify the hCaptcha');
-      return;
+    // Trigger invisible captcha manually
+    captchaRef.current.execute();
+    return;
     }
+    await handleVerifiedSubmit(captchaToken);
+  };
+
+  const handleVerifiedSubmit = async (captchaToken) => {
+  setLoading(true);
+  setError('');
+
 
     try {
       const submitData = new FormData();
@@ -42,7 +50,7 @@ export default function Admissions() {
       submitData.append('class', formData.class);
       submitData.append('phone', formData.phone);
       submitData.append('message', formData.message);
-      data.append('hcaptchaToken', captchaToken);
+      submitData.append('hcaptchaToken', captchaToken);
 
       const response = await fetch('/api/forms', {
         method: 'POST',
@@ -149,14 +157,16 @@ export default function Admissions() {
               <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} required className="w-full border px-4 py-2 mb-4 focus:outline-none focus:border-orange-500" />
               <label className="block mb-2 font-lg">Message</label>
               <textarea id="message" name="message" value={formData.message} onChange={handleChange} required className="w-full border px-4 py-2 mb-4 h-24 min-h-11 focus:outline-none focus:border-orange-500" ></textarea>
-              <div className="flex justify-center">
               <HCaptcha
                 sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY}
-                onVerify={token => setCaptchaToken(token)}
+                onVerify={token => {
+                  setCaptchaToken(token);
+                  handleVerifiedSubmit(token);
+                }}
+                size="invisible"
                 ref={captchaRef}
-                className="self-center"
+                onError={() => setError("Captcha failed, please try again.")}
               />
-              </div>
               <div className="text-center mt-4" >
                 <button
                   type="submit"

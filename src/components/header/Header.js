@@ -1,6 +1,6 @@
 'use client';
 
-import { React, useEffect, useState } from 'react';
+import { React, useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { CgMenuRightAlt } from "react-icons/cg";
@@ -10,6 +10,7 @@ import { FaMobileScreenButton } from "react-icons/fa6";
 import { FaFacebookF } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa6";
 import { FaWhatsapp } from "react-icons/fa";
+import HCaptcha from '@hcaptcha/react-hcaptcha';
 
 
 const Header = () => {
@@ -27,6 +28,9 @@ const Header = () => {
   const [submitted, setSubmitted] = useState('');
   const [submitted2, setSubmitted2] = useState('');
   const [error, setError] = useState('');
+  const [captchaToken, setCaptchaToken] = useState('');
+  const captchaRef = useRef();
+  const formTypeRef = useRef('');
 
   const handleChange = (e) => {
     setFormData({
@@ -42,8 +46,23 @@ const Header = () => {
     setSubmitted2('');
     setError('');
 
-    const form = e.target;
-    const formType = form.getAttribute('id');
+      const form = e.target;
+      const formType = form.getAttribute('id');
+      formTypeRef.current = formType;
+
+    if (!captchaToken) {
+      // Trigger invisible captcha manually
+      captchaRef.current.execute();
+      return;
+    }
+    await handleVerifiedSubmit(captchaToken);
+  };
+
+  const handleVerifiedSubmit = async (captchaToken) => {
+    setLoading(true);
+    setError('');
+
+    const formType = formTypeRef.current;
 
     const submitData = new FormData();
     submitData.append('formType', formType);
@@ -58,6 +77,7 @@ const Header = () => {
       submitData.append('class', formData.class);
       submitData.append('phone', formData.phone);
     }
+    submitData.append('hcaptchaToken', captchaToken);
 
     try {
       const response = await fetch('/api/forms', {
@@ -69,12 +89,14 @@ const Header = () => {
 
       if (response.ok) {
         setFormData({ name: '', class: '', phone: '', message: '' });
-        if(formType === 'admission'){
+        if (formType === 'admission') {
           setSubmitted(true);
         }
-        else if(formType === 'callback'){
+        else if (formType === 'callback') {
           setSubmitted2(true);
         }
+        captchaRef.current.resetCaptcha(); // reset after submit
+        setCaptchaToken('');
       } else {
         setError(result.error || 'Failed to submit.');
       }
@@ -355,6 +377,16 @@ const Header = () => {
                     </select>
                     <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} required className="w-full border-1 border-gray-300 py-3 px-4 text-lg text-black placeholder:text-black outline-none mb-2" placeholder="Mobile No.*"></input>
                     <textarea id="message" name="message" value={formData.message} onChange={handleChange} required className="w-full h-18 min-h-11 border-1 border-gray-300 py-3 px-4 text-lg text-black placeholder:text-black outline-none mb-2" rows="3" placeholder="Write Message"></textarea>
+                    <HCaptcha
+                      sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY}
+                      onVerify={token => {
+                        setCaptchaToken(token);
+                        handleVerifiedSubmit(token);
+                      }}
+                      size="invisible"
+                      ref={captchaRef}
+                      onError={() => setError("Captcha failed, please try again.")}
+                    />
                     <button type="submit" disabled={loading} className="bg-[#e36c28] w-full cursor-pointer text-white py-3 px-4 text-xl placeholder:text-black outline-none">{loading ? 'Sending...' : 'Submit Inquiry'}</button>
                   </div>
                 </form>
@@ -419,6 +451,16 @@ const Header = () => {
                       ))}
                     </select>
                     <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} required className="w-full border-1 border-gray-300 py-3 px-4 text-lg text-black placeholder:text-black outline-none  mb-2" placeholder="Mobile No.*"></input>
+                    <HCaptcha
+                      sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY}
+                      onVerify={token => {
+                        setCaptchaToken(token);
+                        handleVerifiedSubmit(token);
+                      }}
+                      size="invisible"
+                      ref={captchaRef}
+                      onError={() => setError("Captcha failed, please try again.")}
+                    />
                     <button type="submit" disabled={loading} className="bg-[#e36c28] my-3 w-full cursor-pointer text-white py-3 px-4 text-xl placeholder:text-black outline-none">{loading ? 'Sending...' : 'Submit Inquiry'}</button>
                   </div>
                 </form>

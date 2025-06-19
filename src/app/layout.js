@@ -15,7 +15,6 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
       <body
         className={`${geistSans.variable}`}
       >

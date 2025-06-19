@@ -3,7 +3,8 @@
 import FinalFooter from "@/components/finalfooter/Finalfooter";
 import Header from "@/components/header/Header";
 import Image from 'next/image';
-import { useState } from "react";
+import { useState,useRef } from "react";
+import HCaptcha from '@hcaptcha/react-hcaptcha';
 
 export default function CareersPage() {
   const [formData, setFormData] = useState({
@@ -15,6 +16,8 @@ export default function CareersPage() {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState('');
   const [error, setError] = useState('');
+  const [captchaToken, setCaptchaToken] = useState('');
+  const captchaRef = useRef();
 
   const handleChange = (e) => {
     setFormData({
@@ -40,6 +43,18 @@ export default function CareersPage() {
     e.preventDefault();
     setLoading(true);
 
+    if (!captchaToken) {
+    // Trigger invisible captcha manually
+    captchaRef.current.execute();
+    return;
+    }
+    await handleVerifiedSubmit(captchaToken);
+  };
+
+   const handleVerifiedSubmit = async (captchaToken) => {
+   setLoading(true);
+   setError('');
+
     try {
       const submitData = new FormData();
       submitData.append('formType', 'career');
@@ -49,6 +64,7 @@ export default function CareersPage() {
       if (resumeFile) {
         submitData.append('resume', resumeFile);
       }
+      submitData.append('hcaptchaToken', captchaToken);
 
       const response = await fetch('/api/forms', {
         method: 'POST',
@@ -62,6 +78,8 @@ export default function CareersPage() {
         setFormData({ name: '', position: '', email: '' });
         setResumeFile(null);
         document.getElementById('resume').value = '';
+        captchaRef.current.resetCaptcha(); // reset after submit
+        setCaptchaToken('');
       } else {
         setError(result.error || 'Failed to submit.');
       }
@@ -175,6 +193,16 @@ export default function CareersPage() {
               <input type="text" id="position" name="position" value={formData.position} onChange={handleChange} required className="w-full border px-4 py-2 mb-3 focus:outline-none focus:border-orange-500" />
               <label className="block mb-2 text-lg">Upload Resume (PDF/DOC)</label>
               <input type="file" id="resume" name="resume" onChange={handleFileChange} accept=".pdf,.doc,.docx" className="block w-full border text-sm focus:z-10 focus:border-orange-500 disabled:opacity-50 disabled:pointer-events-none file:bg-slate-900 file:border-r-1 file:me-4 file:py-3 file:px-4 file:text-white" />
+              <HCaptcha
+                sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY}
+                onVerify={token => {
+                  setCaptchaToken(token);
+                  handleVerifiedSubmit(token);
+                }}
+                size="invisible"
+                ref={captchaRef}
+                onError={() => setError("Captcha failed, please try again.")}
+              />
               <div className="text-center">
                 <button
                   type="submit"
