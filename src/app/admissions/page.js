@@ -3,10 +3,11 @@
 import FinalFooter from "@/components/finalfooter/Finalfooter";
 import Header from "@/components/header/Header";
 import Image from 'next/image';
-import { useState } from "react";
+import { useState, useRef } from "react";
+import HCaptcha from '@hcaptcha/react-hcaptcha';
 
 export default function Admissions() {
-const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState({
     name: '',
     class: '',
     phone: '',
@@ -15,6 +16,8 @@ const [formData, setFormData] = useState({
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState('');
   const [error, setError] = useState('');
+  const [captchaToken, setCaptchaToken] = useState('');
+  const captchaRef = useRef();
 
   const handleChange = (e) => {
     setFormData({
@@ -27,6 +30,11 @@ const [formData, setFormData] = useState({
     e.preventDefault();
     setLoading(true);
 
+    if (!captchaToken) {
+      alert('Please verify the hCaptcha');
+      return;
+    }
+
     try {
       const submitData = new FormData();
       submitData.append('formType', 'admission')
@@ -34,6 +42,7 @@ const [formData, setFormData] = useState({
       submitData.append('class', formData.class);
       submitData.append('phone', formData.phone);
       submitData.append('message', formData.message);
+      data.append('hcaptchaToken', captchaToken);
 
       const response = await fetch('/api/forms', {
         method: 'POST',
@@ -45,6 +54,8 @@ const [formData, setFormData] = useState({
       if (response.ok) {
         setFormData({ name: '', class: '', phone: '', message: '' });
         setSubmitted(true);
+        captchaRef.current.resetCaptcha(); // reset after submit
+        setCaptchaToken('');
       } else {
         setError(result.error || 'Failed to submit.');
       }
@@ -52,7 +63,7 @@ const [formData, setFormData] = useState({
       setError('An error occurred while submitting.');
     } finally {
       setLoading(false);
-    } 
+    }
   };
 
   return (
@@ -116,11 +127,11 @@ const [formData, setFormData] = useState({
             </div>
             <div className="relative w-0 left-0 right-0 mx-auto z-40 before:content-[''] before:absolute before:top-[calc(100%-10px)] before:border-b-[12px] before:border-b-white before:border-l-[12px] before:border-l-transparent before:border-r-[12px] before:border-r-transparent"></div>
           </div>
-          <div className={`transition-visibility duration-500 ${submitted ? 'hidden' : 'block'}`}>
+          <div className={` transition-visibility duration-500 ${submitted ? 'hidden' : 'block'}`}>
             <form onSubmit={handleSubmit} >
               {error && <p className="text-red-500">{error}</p>}
-              <label className="block mb-2 font-lg">Student's Name</label>
-              <input  type="text" id="name" name="name" value={formData.name} onChange={handleChange} required className="w-full border px-4 py-2 mb-4 focus:outline-none focus:border-orange-500" />
+              <label className="block w-full mb-2 font-lg">Student's Name</label>
+              <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required className="w-full border px-4 py-2 mb-4 focus:outline-none focus:border-orange-500" />
               <label className="block mb-2 font-lg">Class Applying For</label>
               <select type="text" id="class" name="class" value={formData.class} onChange={handleChange} required className="w-full border px-4 py-2 mb-4 focus:outline-none focus:border-orange-500">
                 <option value="">Select Class*</option>
@@ -138,11 +149,19 @@ const [formData, setFormData] = useState({
               <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} required className="w-full border px-4 py-2 mb-4 focus:outline-none focus:border-orange-500" />
               <label className="block mb-2 font-lg">Message</label>
               <textarea id="message" name="message" value={formData.message} onChange={handleChange} required className="w-full border px-4 py-2 mb-4 h-24 min-h-11 focus:outline-none focus:border-orange-500" ></textarea>
-              <div className="text-center mt-2">
+              <div className="flex justify-center">
+              <HCaptcha
+                sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY}
+                onVerify={token => setCaptchaToken(token)}
+                ref={captchaRef}
+                className="self-center"
+              />
+              </div>
+              <div className="text-center mt-4" >
                 <button
                   type="submit"
                   disabled={loading}
-                  className="bg-[#e36c28] text-white px-6 py-2 cursor-pointer hover:bg-orange-400"
+                  className="bg-[#e36c28] text-white px-10 py-2 cursor-pointer hover:bg-orange-400"
                 >
                   {loading ? 'Sending...' : 'Submit'}
                 </button>

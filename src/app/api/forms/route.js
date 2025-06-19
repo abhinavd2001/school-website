@@ -2,6 +2,7 @@ import nodemailer from 'nodemailer';
 import { NextResponse } from 'next/server';
 import { writeFile, unlink } from 'fs/promises';
 import path from 'path';
+import fetch from 'node-fetch';
 
 const createTransporter = () => {
   return nodemailer.createTransport({
@@ -87,6 +88,22 @@ export async function POST(request) {
   try {
     const formData = await request.formData();
     const formType = formData.get('formType');
+    const hcaptchaToken = formData.get('hcaptchaToken');
+
+    if (!hcaptchaToken) {
+          return NextResponse.json({ message: 'Captcha verification failed' }, { status: 400 });
+        }
+    
+        const captchaRes = await fetch('https://hcaptcha.com/siteverify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: `response=${hcaptchaToken}&secret=${process.env.HCAPTCHA_SECRET_KEY}`,
+        });
+    
+        const captchaData = await captchaRes.json();
+        if (!captchaData.success) {
+          return NextResponse.json({ message: 'Captcha verification failed' }, { status: 400 });
+        }
 
     let data = {};
     let resumeFile = null;
